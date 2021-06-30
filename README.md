@@ -18,11 +18,49 @@
 
 ## 坐标系转换
 
-我把网上搜集到的坐标系转换[工具函数](./utils/geoTransform.js)放到仓库内，主要有`BD-09`与`GCJ-02`互转、`GCJ-02`与`WGS84`互转；也在GitHub上找到一个对地理坐标系转换工具的库：https://github.com/hujiulong/gcoord，可以自行选择。
+我把网上搜集到的坐标系转换[工具函数](./utils/geoTransform.js)放到仓库内，主要有`BD-09`与`GCJ-02`互转、`GCJ-02`与`WGS84`互转；也在GitHub上找到一个对地理坐标系转换工具的[gcoord库](https://github.com/hujiulong/gcoord)，可以自行选择。
 
-收集了一个可视化的转换工具网页：https://tool.lu/coordinate/，可以进入该页面可视化查看`BD-09`、`GCJ-02`、`WGS84`多个转换结果。
+收集了一个可视化的[转换工具网页](https://tool.lu/coordinate/)，可以进入该页面可视化查看`BD-09`、`GCJ-02`、`WGS84`多个转换结果。
 
 如果想校验转换后经纬度是否正确，可以进入[百度拾取坐标系统](https://api.map.baidu.com/lbsapi/getpoint/index.html)，在系统中对百度坐标系的经纬度或经过工具转换后得到的百度坐标系的经纬度进行“坐标反查”搜索，然后看位置是否正确。
+
+
+
+## 什么是GeoJSON数据？
+
+关于GeoJSON数据的定义，引用维基百科[定义](https://zh.wikipedia.org/wiki/GeoJSON)：
+
+> **GeoJSON**是一种基于[JSON](https://zh.wikipedia.org/wiki/JSON)的地理空间数据交换格式，它定义了几种类型JSON对象以及它们组合在一起的方法，以表示有关地理要素、属性和它们的空间范围的数据。
+>
+> 2015年，互联网工程任务组（[IETF](https://zh.wikipedia.org/wiki/互联网工程任务组)）与原始规范作者组建了一个GeoJSON工作组，一起规范GeoJSON标准。在2016年8月，推出了最新的GeoJSON数据格式标准规范([RFC 7946](https://tools.ietf.org/html/rfc7946))。
+>
+> GeoJSON使用唯一地理坐标参考系统WGS1984和十进制度单位，一个GeoJSON对象可以是Geometry, Feature或者FeatureCollection.
+>
+> 其几何对象包括有点（表示地理位置）、线（表示街道、公路、边界）、[多边形](https://zh.wikipedia.org/wiki/多边形)（表示国家、省、领土），以及由以上类型组合成的复合几何图形。
+
+比如：
+
+- 描述点的数据
+
+```
+{
+    "type": "Point", 
+    "coordinates": [30, 10]
+}
+```
+
+- 描述线段的数据
+
+```
+{
+    "type": "LineString", 
+    "coordinates": [
+        [30, 10], [10, 30], [40, 40]
+    ]
+}
+```
+
+简单来说就是根据定义的类型type和地理经纬度信息coordinates，从而构成一个几何图形，只是这个几何图形的信息与地理经纬度有关。
 
 
 
@@ -30,77 +68,85 @@
 
 我把阿里网站维护的中国行政区划分数据下载到本仓库的map目录下，若想查看最新的数据可以进入到[这里](https://datav.aliyun.com/tools/atlas/)。
 
-其中，带`full`表示包含子区域，即带更细致的子区域划分。
+其中，带`full`表示包含子区域，即带更细致的子区域（市/区）划分。
 
-[中国_100000.json](./map/中国_100000.json)
-[中国_100000_full.json](./map/中国_100000_full.json)
+- [中国_100000.json](./map/中国_100000.json)
+- [中国_100000_full.json](./map/中国_100000_full.json)
 
-[上海市_310000.json](./map/上海市_310000.json)
-[上海市_310000_full.json](./map/上海市_310000_full.json)
-[云南省_530000.json](./map/云南省_530000.json)
-[云南省_530000_full.json](./map/云南省_530000_full.json)
-[内蒙古自治区_150000.json](./map/内蒙古自治区_150000.json)
-[内蒙古自治区_150000_full.json](./map/内蒙古自治区_150000_full.json)    
-[北京市_110000.json](./map/北京市_110000.json)
-[北京市_110000_full.json](./map/北京市_110000_full.json)
-[台湾省_710000.json](./map/台湾省_710000.json)
-[台湾省_710000_full.json](./map/台湾省_710000_full.json)
-[吉林省_220000.json](./map/吉林省_220000.json)
-[吉林省_220000_full.json](./map/吉林省_220000_full.json)
-[四川省_510000.json](./map/四川省_510000.json)
-[四川省_510000_full.json](./map/四川省_510000_full.json)
-[天津市_120000.json](./map/天津市_120000.json)
-[天津市_120000_full.json](./map/天津市_120000_full.json)
-[宁夏回族自治区_640000.json](./map/宁夏回族自治区_640000.json)
-[宁夏回族自治区_640000_full.json](./map/宁夏回族自治区_640000_full.json)
-[安徽省_340000.json](./map/安徽省_340000.json)
-[安徽省_340000_full.json](./map/安徽省_340000_full.json)
-[山东省_370000.json](./map/山东省_370000.json)
-[山东省_370000_full.json](./map/山东省_370000_full.json)
-[山西省_140000.json](./map/山西省_140000.json)
-[山西省_140000_full.json](./map/山西省_140000_full.json)
-[广东省_440000.json](./map/广东省_440000.json)
-[广东省_440000_full.json](./map/广东省_440000_full.json)
-[广西壮族自治区_450000.json](./map/广西壮族自治区_450000.json)
-[广西壮族自治区_450000_full.json](./map/广西壮族自治区_450000_full.json)
-[新疆维吾尔自治区_650000.json](./map/新疆维吾尔自治区_650000.json)
-[新疆维吾尔自治区_650000_full.json](./map/新疆维吾尔自治区_650000_full.json)
-[江苏省_320000.json](./map/江苏省_320000.json)
-[江苏省_320000_full.json](./map/江苏省_320000_full.json)
-[江西省_360000.json](./map/江西省_360000.json)
-[江西省_360000_full.json](./map/江西省_360000_full.json)
-[河北省_130000.json](./map/河北省_130000.json)
-[河北省_130000_full.json](./map/河北省_130000_full.json)
-[河南省_410000.json](./map/河南省_410000.json)
-[河南省_410000_full.json](./map/河南省_410000_full.json)
-[浙江省_330000.json](./map/浙江省_330000.json)
-[浙江省_330000_full.json](./map/浙江省_330000_full.json)
-[海南省_460000.json](./map/海南省_460000.json)
-[海南省_460000_full.json](./map/海南省_460000_full.json)
-[湖北省_420000.json](./map/湖北省_420000.json)
-[湖北省_420000_full.json](./map/湖北省_420000_full.json)
-[湖南省_430000.json](./map/湖南省_430000.json)
-[湖南省_430000_full.json](./map/湖南省_430000_full.json)
-[甘肃省_620000.json](./map/甘肃省_620000.json)
-[甘肃省_620000_full.json](./map/甘肃省_620000_full.json)
-[福建省_350000.json](./map/福建省_350000.json)
-[福建省_350000_full.json](./map/福建省_350000_full.json)
-[西藏自治区_540000.json](./map/西藏自治区_540000.json)
-[西藏自治区_540000_full.json](./map/西藏自治区_540000_full.json)
-[贵州省_520000.json](./map/贵州省_520000.json)
-[贵州省_520000_full.json](./map/贵州省_520000_full.json)
-[辽宁省_210000.json](./map/辽宁省_210000.json)
-[辽宁省_210000_full.json](./map/辽宁省_210000_full.json)
-[重庆市_500000.json](./map/重庆市_500000.json)
-[重庆市_500000_full.json](./map/重庆市_500000_full.json)
-[陕西省_610000.json](./map/陕西省_610000.json)
-[陕西省_610000_full.json](./map/陕西省_610000_full.json)
-[青海省_630000.json](./map/青海省_630000.json)
-[青海省_630000_full.json](./map/青海省_630000_full.json)
-[黑龙江省_230000.json](./map/黑龙江省_230000.json)
-[黑龙江省_230000_full.json](./map/黑龙江省_230000_full.json)
+
+
+- [上海市_310000.json](./map/上海市_310000.json)
+- [上海市_310000_full.json](./map/上海市_310000_full.json)
+- [云南省_530000.json](./map/云南省_530000.json)
+- [云南省_530000_full.json](./map/云南省_530000_full.json)
+- [内蒙古自治区_150000.json](./map/内蒙古自治区_150000.json)
+- [内蒙古自治区_150000_full.json](./map/内蒙古自治区_150000_full.json)  
+- [北京市_110000.json](./map/北京市_110000.json)
+- [北京市_110000_full.json](./map/北京市_110000_full.json)
+- [台湾省_710000.json](./map/台湾省_710000.json)
+- [台湾省_710000_full.json](./map/台湾省_710000_full.json)
+- [吉林省_220000.json](./map/吉林省_220000.json)
+- [吉林省_220000_full.json](./map/吉林省_220000_full.json)
+- [四川省_510000.json](./map/四川省_510000.json)
+- [四川省_510000_full.json](./map/四川省_510000_full.json)
+- [天津市_120000.json](./map/天津市_120000.json)
+- [天津市_120000_full.json](./map/天津市_120000_full.json)
+- [宁夏回族自治区_640000.json](./map/宁夏回族自治区_640000.json)
+- [宁夏回族自治区_640000_full.json](./map/宁夏回族自治区_640000_full.json)
+- [安徽省_340000.json](./map/安徽省_340000.json)
+- [安徽省_340000_full.json](./map/安徽省_340000_full.json)
+- [山东省_370000.json](./map/山东省_370000.json)
+- [山东省_370000_full.json](./map/山东省_370000_full.json)
+- [山西省_140000.json](./map/山西省_140000.json)
+- [山西省_140000_full.json](./map/山西省_140000_full.json)
+- [广东省_440000.json](./map/广东省_440000.json)
+- [广东省_440000_full.json](./map/广东省_440000_full.json)
+- [广西壮族自治区_450000.json](./map/广西壮族自治区_450000.json)
+- [广西壮族自治区_450000_full.json](./map/广西壮族自治区_450000_full.json)
+- [新疆维吾尔自治区_650000.json](./map/新疆维吾尔自治区_650000.json)
+- [新疆维吾尔自治区_650000_full.json](./map/新疆维吾尔自治区_650000_full.json)
+- [江苏省_320000.json](./map/江苏省_320000.json)
+- [江苏省_320000_full.json](./map/江苏省_320000_full.json)
+- [江西省_360000.json](./map/江西省_360000.json)
+- [江西省_360000_full.json](./map/江西省_360000_full.json)
+- [河北省_130000.json](./map/河北省_130000.json)
+- [河北省_130000_full.json](./map/河北省_130000_full.json)
+- [河南省_410000.json](./map/河南省_410000.json)
+- [河南省_410000_full.json](./map/河南省_410000_full.json)
+- [浙江省_330000.json](./map/浙江省_330000.json)
+- [浙江省_330000_full.json](./map/浙江省_330000_full.json)
+- [海南省_460000.json](./map/海南省_460000.json)
+- [海南省_460000_full.json](./map/海南省_460000_full.json)
+- [湖北省_420000.json](./map/湖北省_420000.json)
+- [湖北省_420000_full.json](./map/湖北省_420000_full.json)
+- [湖南省_430000.json](./map/湖南省_430000.json)
+- [湖南省_430000_full.json](./map/湖南省_430000_full.json)
+- [甘肃省_620000.json](./map/甘肃省_620000.json)
+- [甘肃省_620000_full.json](./map/甘肃省_620000_full.json)
+- [福建省_350000.json](./map/福建省_350000.json)
+- [福建省_350000_full.json](./map/福建省_350000_full.json)
+- [西藏自治区_540000.json](./map/西藏自治区_540000.json)
+- [西藏自治区_540000_full.json](./map/西藏自治区_540000_full.json)
+- [贵州省_520000.json](./map/贵州省_520000.json)
+- [贵州省_520000_full.json](./map/贵州省_520000_full.json)
+- [辽宁省_210000.json](./map/辽宁省_210000.json)
+- [辽宁省_210000_full.json](./map/辽宁省_210000_full.json)
+- [重庆市_500000.json](./map/重庆市_500000.json)
+- [重庆市_500000_full.json](./map/重庆市_500000_full.json)
+- [陕西省_610000.json](./map/陕西省_610000.json)
+- [陕西省_610000_full.json](./map/陕西省_610000_full.json)
+- [青海省_630000.json](./map/青海省_630000.json)
+- [青海省_630000_full.json](./map/青海省_630000_full.json)
+- [黑龙江省_230000.json](./map/黑龙江省_230000.json)
+- [黑龙江省_230000_full.json](./map/黑龙江省_230000_full.json)
+- [香港特别行政区_810000.json](./map/香港特别行政区_810000.json)
+- [香港特别行政区_810000_full.json](./map/香港特别行政区_810000_full.json)
+- [澳门特别行政区_820000.json](./map/澳门特别行政区_820000.json)
+- [澳门特别行政区_820000_full.json](./map/澳门特别行政区_820000_full.json)
 
 > 注意：以上geojson对象中的经纬度坐标系信息均为`WGS84`。
+
+
 
 
 
